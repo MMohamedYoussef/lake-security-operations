@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+*.duckdb
+*.duckdb.wal
+build/
+run-output/
+synthetic-input/
+synthetic-output/
+.env*

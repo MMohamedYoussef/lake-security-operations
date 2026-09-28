@@ -1,0 +1,4 @@
+host_id,criticality,team
+web-1,standard,application
+web-2,standard,application
+vault-1,sensitive,security

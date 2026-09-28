@@ -1,0 +1,3 @@
+{"event_id":"priv-001","occurred_at":"2026-02-04T08:10:00Z","account":"demo-lee","host":"vault-1","action":"grant","privilege":"admin"}
+{"event_id":"priv-002","occurred_at":"2026-02-04T08:20:00Z","account":"demo-lee","host":"vault-1","action":"revoke","privilege":"admin"}
+{"event_id":"priv-003","occurred_at":"2026-02-04T09:00:00Z","account":"demo-bea","host":"web-2","action":"grant","privilege":"admin"}

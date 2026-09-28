@@ -1,0 +1,12 @@
+{"event_id":"auth-006","occurred_at":"2026-02-03T09:10:00Z","account":"demo-alex","host":"web-1","outcome":"success","source_ip":"192.0.2.10"}
+{"event_id":"auth-001","occurred_at":"2026-02-03T09:01:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}
+{"event_id":"auth-002","occurred_at":"2026-02-03T09:03:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}
+{"event_id":"auth-003","occurred_at":"2026-02-03T09:05:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}
+{"event_id":"auth-004","occurred_at":"2026-02-03T09:07:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}
+{"event_id":"auth-005","occurred_at":"2026-02-03T09:09:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}
+{"event_id":"auth-007","occurred_at":"2026-02-03T09:12:00Z","account":"demo-bea","host":"web-2","outcome":"success","source_ip":"198.51.100.40"}
+{"event_id":"auth-008","occurred_at":"2026-02-03T09:15:00Z","account":"demo-bea","host":"web-2","outcome":"failure","source_ip":"198.51.100.40"}
+{"event_id":"auth-009","occurred_at":"2026-02-03T09:18:00Z","account":"demo-bea","host":"web-2","outcome":"success","source_ip":"198.51.100.40"}
+{"event_id":"auth-010","occurred_at":"2026-02-04T08:00:00Z","account":"demo-lee","host":"vault-1","outcome":"success","source_ip":"203.0.113.7"}
+{"event_id":"auth-011","occurred_at":"2026-02-04T08:05:00Z","account":"demo-lee","host":"unknown-host","outcome":"failure","source_ip":"203.0.113.7"}
+{"event_id":"auth-002","occurred_at":"2026-02-04T08:06:00Z","account":"demo-alex","host":"web-1","outcome":"failure","source_ip":"192.0.2.10"}

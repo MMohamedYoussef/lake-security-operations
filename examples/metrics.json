@@ -1,0 +1,24 @@
+{
+  "affected_hosts": [
+    "vault-1",
+    "web-1"
+  ],
+  "brute_force_alerts": 1,
+  "daily_alerts": [
+    {
+      "alerts": 1,
+      "date": "2026-02-03"
+    },
+    {
+      "alerts": 1,
+      "date": "2026-02-04"
+    }
+  ],
+  "quarantined": 2,
+  "sensitive_privilege_alerts": 1,
+  "severity_counts": {
+    "high": 2
+  },
+  "total_alerts": 2,
+  "total_events": 13
+}

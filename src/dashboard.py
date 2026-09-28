@@ -1,0 +1,50 @@
+"""Standalone HTML report with inline CSS and SVG only."""
+
+from html import escape
+
+
+def render_dashboard(metrics: dict) -> str:
+    severity = metrics["severity_counts"]
+    affected = metrics["affected_hosts"]
+    daily = metrics["daily_alerts"]
+    max_daily = max((row["alerts"] for row in daily), default=1)
+    bars = "".join(
+        f'<div class="bar-row"><span>{escape(row["date"])}</span><div class="track"><div class="bar" style="width:{100 * row["alerts"] / max_daily:.1f}%"></div></div><strong>{row["alerts"]}</strong></div>'
+        for row in daily
+    ) or '<p class="muted">No alerts in this run.</p>'
+    host_items = "".join(f"<li>{escape(host)}</li>" for host in affected) or "<li>No affected hosts</li>"
+    severity_items = "".join(
+        f"<li><span>{escape(level.title())}</span><strong>{count}</strong></li>" for level, count in sorted(severity.items())
+    ) or "<li><span>None</span><strong>0</strong></li>"
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security Operations | Detection Overview</title>
+<style>
+:root {{color-scheme:dark;font-family:Inter,Segoe UI,Arial,sans-serif;background:#08131b;color:#e8f4f3}}
+* {{box-sizing:border-box}} body {{margin:0;background:radial-gradient(circle at 75% 0%,#153849,#08131b 45%);min-height:100vh}}
+header,main,footer {{max-width:1120px;margin:auto;padding:28px}} header {{padding-top:54px}}
+.eyebrow {{color:#54d8c0;letter-spacing:.17em;text-transform:uppercase;font-size:12px;font-weight:700}}
+h1 {{font-size:clamp(32px,5vw,56px);line-height:1.03;margin:12px 0}} h2 {{font-size:19px;margin:0 0 18px}}
+.intro,.muted {{color:#a5bec5}} .intro {{max-width:680px;line-height:1.6}}
+.cards {{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}}
+.card,.panel {{border:1px solid #28505b;background:#102832;border-radius:16px;padding:20px;box-shadow:0 12px 26px #0018}}
+.card b {{display:block;font-size:36px;color:#fff;margin-top:8px}} .card span {{font-size:13px;color:#a5bec5}}
+.grid {{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}} .panel {{min-height:240px}}
+.bar-row {{display:grid;grid-template-columns:100px 1fr 25px;gap:12px;align-items:center;margin:17px 0;font-size:13px}}
+.track {{height:14px;border-radius:9px;background:#24424b;overflow:hidden}} .bar {{height:100%;border-radius:9px;background:linear-gradient(90deg,#2dc0d3,#6af0b9)}}
+ul {{padding:0;list-style:none}} li {{display:flex;justify-content:space-between;border-bottom:1px solid #29454f;padding:10px 0}}
+.tag {{display:inline-block;border-radius:30px;padding:6px 10px;background:#214e4d;color:#7be4cb;font-size:12px}}
+footer {{color:#90a8af;font-size:12px;padding-bottom:50px}} @media(max-width:760px) {{.cards {{grid-template-columns:repeat(2,1fr)}} .grid {{grid-template-columns:1fr}}}}
+</style></head><body>
+<header><div class="eyebrow">Synthetic security telemetry · local lake + warehouse</div><h1>Detection overview</h1>
+<p class="intro">Event-time correlation across authentication and privilege logs. This offline report is generated from DuckDB warehouse queries, not directly from raw files.</p></header>
+<main><section class="cards"><div class="card"><span>Accepted events</span><b>{metrics['total_events']}</b></div>
+<div class="card"><span>Alerts</span><b>{metrics['total_alerts']}</b></div>
+<div class="card"><span>Affected hosts</span><b>{len(affected)}</b></div>
+<div class="card"><span>Quarantined records</span><b>{metrics['quarantined']}</b></div></section>
+<section class="grid"><div class="panel"><h2>Detection timeline</h2>{bars}</div>
+<div class="panel"><h2>Rules fired</h2><ul><li><span>Brute-force success</span><strong>{metrics['brute_force_alerts']}</strong></li>
+<li><span>Sensitive privilege grant</span><strong>{metrics['sensitive_privilege_alerts']}</strong></li></ul><span class="tag">10-minute event-time window</span></div>
+<div class="panel"><h2>Severity</h2><ul>{severity_items}</ul></div><div class="panel"><h2>Affected hosts</h2><ul>{host_items}</ul></div></section></main>
+<footer>Demonstration rule set only. Alerts can be false positives and require human investigation. Synthetic data; no production credentials or identities.</footer>
+</body></html>"""
